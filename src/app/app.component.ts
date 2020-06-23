@@ -3,7 +3,8 @@ import { Component } from "@angular/core";
 import { Platform } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
-import { TranslateService, LangChangeEvent } from "@ngx-translate/core";
+import { TranslateService } from "@ngx-translate/core";
+import { NotificationService } from "./services/notification.service";
 
 @Component({
   selector: "app-root",
@@ -15,7 +16,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private notifications: NotificationService
   ) {
     this.initializeApp();
   }
@@ -23,8 +25,11 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.translate.use("en");
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      if (this.platform.is("cordova")) {
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+        this.notifications.init();
+      }
     });
   }
 }

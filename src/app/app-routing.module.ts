@@ -13,22 +13,34 @@ const routes: Routes = [
     pathMatch: "full",
   },
   {
-    path: "topics",
+    path: "tip-sheets",
     loadChildren: () =>
-      import("./topics/topics.module").then((m) => m.TopicsPageModule),
+      import("./tip-sheets/tip-sheets.module").then(
+        (m) => m.TipSheetsPageModule
+      ),
   },
   {
-    path: 'activities',
-    loadChildren: () => import('./activities/activities.module').then( m => m.ActivitiesPageModule)
+    path: "activities",
+    loadChildren: () =>
+      import("./activities/activities.module").then(
+        (m) => m.ActivitiesPageModule
+      ),
   },
   {
-    path: 'songs',
-    loadChildren: () => import('./songs/songs.module').then( m => m.SongsPageModule)
+    path: "songs",
+    loadChildren: () =>
+      import("./songs/songs.module").then((m) => m.SongsPageModule),
   },
   {
-    path: 'stories',
-    loadChildren: () => import('./stories/stories.module').then( m => m.StoriesPageModule)
-  }
+    path: "stories",
+    loadChildren: () =>
+      import("./stories/stories.module").then((m) => m.StoriesPageModule),
+  },
+  {
+    path: "chat",
+    loadChildren: () =>
+      import("./chat/chat.module").then((m) => m.ChatPageModule),
+  },
 ];
 
 @NgModule({

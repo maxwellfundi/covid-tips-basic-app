@@ -1,0 +1,98 @@
+<div class="slides-container">
+  <ion-slides
+    #slides
+    (ionSlideDidChange)="slideDidChange()"
+    [options]="slideOptions"
+  >
+    <ion-slide>
+      <div class="slide-content">
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-back-button defaultHref="home"></ion-back-button>
+            </ion-buttons>
+            <ion-title>Tips</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <!-- <ion-content> -->
+        <div class="tip-sheets-list-container">
+          <app-tip-sheet-title
+            class="tip-sheet-nav-link"
+            *ngFor="let tipSheet of tipSheets; let i=index"
+            (click)="slideTo(i+1)"
+            [tipSheet]="tipSheet"
+          >
+          </app-tip-sheet-title>
+        </div>
+      </div>
+    </ion-slide>
+    <!-- NOTE - do not use *ngFor in slides as dynamic heights can be tricky -->
+    <ion-slide *ngFor="let tipSheet of tipSheets; let i=index">
+      <div class="slide-content">
+        <div style="display: flex; align-items: center;">
+          <ion-button fill="clear" class="tip-sheet-nav" (click)="slideTo(0)">
+            <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+          </ion-button>
+          <app-tip-sheet-title
+            [tipSheet]="tipSheet"
+            style="flex: 1;"
+          ></app-tip-sheet-title>
+          <ion-button
+            fill="clear"
+            class="tip-sheet-nav"
+            (click)="slideTo(tipSheet.number+1)"
+            *ngIf="tipSheet.number<tipSheets.length"
+          >
+            <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <app-tip-sheet-1 *ngIf="tipSheet.number===1"></app-tip-sheet-1>
+        <app-tip-sheet-2 *ngIf="tipSheet.number===2"></app-tip-sheet-2>
+        <app-tip-sheet-3 *ngIf="tipSheet.number===3"></app-tip-sheet-3>
+        <app-tip-sheet-4 *ngIf="tipSheet.number===4"></app-tip-sheet-4>
+        <app-tip-sheet-5 *ngIf="tipSheet.number===5"></app-tip-sheet-5>
+        <app-tip-sheet-6 *ngIf="tipSheet.number===6"></app-tip-sheet-6>
+        <app-tip-sheet-7 *ngIf="tipSheet.number===7"></app-tip-sheet-7>
+        <app-tip-sheet-8 *ngIf="tipSheet.number===8"></app-tip-sheet-8>
+        <app-tip-sheet-9 *ngIf="tipSheet.number===9"></app-tip-sheet-9>
+        <app-tip-sheet-10 *ngIf="tipSheet.number===10"></app-tip-sheet-10>
+        <app-tip-sheet-11 *ngIf="tipSheet.number===11"></app-tip-sheet-11>
+        <app-tip-sheet-12 *ngIf="tipSheet.number===12"></app-tip-sheet-12>
+        <app-tip-sheet-13 *ngIf="tipSheet.number===13"></app-tip-sheet-13>
+        <app-tip-sheet-14 *ngIf="tipSheet.number===14"></app-tip-sheet-14>
+        <app-tip-sheet-15 *ngIf="tipSheet.number===15"></app-tip-sheet-15>
+        <div
+          style="margin-top: 1em;"
+          *ngIf="i < tipSheets.length - 1"
+          (click)="slideTo(tipSheet.number+1)"
+        >
+          <h2>Next:</h2>
+          <div style="display: flex; align-items: center;">
+            <div style="margin-left: 10px; flex: 1;">
+              <app-tip-sheet-title
+                [tipSheet]="tipSheets[i+1]"
+              ></app-tip-sheet-title>
+            </div>
+            <ion-icon
+              style="font-size: 30px;"
+              name="chevron-forward-outline"
+            ></ion-icon>
+          </div>
+        </div>
+        <div
+          style="margin-top: 1em;"
+          *ngIf="i === tipSheets.length - 1"
+          (click)="slideTo(0)"
+        >
+          <ion-button fill="clear" style="color: white;">
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            Home
+          </ion-button>
+        </div>
+      </div>
+    </ion-slide>
+  </ion-slides>
+</div>
+
+<!-- TODO - provide proof of affiliation for play store and uncomment -->
+<!-- <app-info-sites-disclaimer></app-info-sites-disclaimer> -->

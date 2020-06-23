@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "covid-tips-basic-app": {
+      "hosting": {
+        "app": [
+          "covid-tips-basic-app"
+        ]
+      }
+    }
+  }
+}
