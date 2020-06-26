@@ -15,7 +15,8 @@ export interface ChatResponseOption {
 export type ResponseCustomAction =
   | "bot-leave"
   | "goto-home-screen"
-  | "bot-return";
+  | "bot-walk-back"
+  | "bot-run-back";
 
 export function mockMessageGenerator(callback: (msg: ChatMessage) => void) {
   let mockMessages: MockChatMessage[] = [
@@ -80,7 +81,7 @@ export function mockMessageGenerator(callback: (msg: ChatMessage) => void) {
       sender: "bot",
       text: "Okay chat to you later!",
       responseOptions: [
-        { text: "Need more help", customAction: "bot-return" },
+        { text: "Need more help", customAction: "bot-run-back" },
         { text: "Go to Home Screen", customAction: "goto-home-screen" },
       ],
     },
@@ -88,7 +89,9 @@ export function mockMessageGenerator(callback: (msg: ChatMessage) => void) {
       delay: 24000,
       sender: "user",
       text: "Need more help",
-      responseOptions: [{ text: "Need more help", customAction: "bot-return" }],
+      responseOptions: [
+        { text: "Need more help", customAction: "bot-run-back" },
+      ],
     },
   ];
   mockMessages.forEach((msg) => {

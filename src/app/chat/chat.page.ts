@@ -39,6 +39,10 @@ export class ChatPage implements OnInit {
   private messagesContent: IonContent;
   scrollingInterval: any;
 
+  inputValue: string = "";
+
+  showingAllMessages = false;
+
   constructor(
     private notificationService: NotificationService,
     private cd: ChangeDetectorRef
@@ -77,9 +81,20 @@ export class ChatPage implements OnInit {
     };
     if (rapidMsg.quick_replies) {
       try {
-        chatMsg.responseOptions = JSON.parse(
-          rapidMsg.quick_replies
-        ).map((word) => ({ text: word }));
+        chatMsg.responseOptions = JSON.parse(rapidMsg.quick_replies).map(
+          (word: string) => {
+            let responseOption: ChatResponseOption = {
+              text: word,
+            };
+            if (word.toLowerCase().indexOf("help") > -1) {
+              responseOption.customAction = "bot-run-back";
+            }
+            if (word.toLowerCase().indexOf("come back") > -1) {
+              responseOption.customAction = "bot-walk-back";
+            }
+            return responseOption;
+          }
+        );
       } catch (ex) {
         console.log("Error parsing quick replies", ex);
       }
@@ -107,35 +122,15 @@ export class ChatPage implements OnInit {
       }
       this.responseOptions = message.responseOptions
         ? message.responseOptions
-        : [{ text: "no" }];
+        : [];
     } else {
       this.responseOptions = [];
     }
-    /* if (this.allMessages.filter((msg) => msg.sender === "user").length > 0) {
-      this.messages = [];
-      for (var i = this.allMessages.length - 1; i > 0; i--) {
-        if (this.allMessages[i].sender !== message.sender) {
-          this.messages.push(this.allMessages[i]);
-          break;
-        } else {
-          this.messages.push(this.allMessages[i]);
-        }
-      }
-    } else {
+    if (this.showingAllMessages) {
       this.messages = this.allMessages;
-    } 
-    this.messages = this.messages.sort((a, b) => a.dateReceived.getTime() - b.dateReceived.getTime());
-    */
-    /* let botMessages = this.allMessages.filter((msg) => msg.sender === "bot");
-    let userMessages = this.allMessages.filter((msg) => msg.sender === "user");
-    this.messages = [];
-    if (botMessages.length > 0) {
-      this.messages.push(botMessages.pop());
+    } else {
+      this.messages = this.allMessages.slice(this.allMessages.length - 2);
     }
-    if (userMessages.length > 0) {
-      this.messages.push(userMessages.pop());
-    } */
-    this.messages = this.allMessages.slice(this.allMessages.length - 2);
     this.messagesContent.scrollToBottom(2000);
     this.cd.detectChanges();
   }
@@ -148,18 +143,32 @@ export class ChatPage implements OnInit {
       };
       this.botBlobState = "walking-out";
       setTimeout(() => (this.botBlobState = "absent"), 4200);
-    } else if (action === "bot-return") {
+    } else if (action === "bot-run-back") {
       this.botBlobState = "run-in";
       this.botAnimOptions = {
         loop: false,
         path: "/assets/lottie-animations/Run_In_Entrance_Pass_v2.json",
       };
       setTimeout(() => (this.botBlobState = "still"), 3200);
+    } else if (action === "bot-walk-back") {
+      this.botBlobState = "walking-in";
+      this.botAnimOptions = {
+        loop: false,
+        path: "/assets/lottie-animations/Walk_In_Entrance_Pass_v2.json",
+      };
+      setTimeout(() => (this.botBlobState = "still"), 3200);
     }
   }
 
+  onInputSubmit(event: any) {
+    this.sendCustomOption(this.inputValue);
+    this.inputValue = "";
+  }
+
   sendCustomOption(text: string) {
-    this.notificationService.sendRapidproMessage(text);
+    if (window["cordova"]) {
+      this.notificationService.sendRapidproMessage(text);
+    }
     this.onReceiveMessage({
       text: text,
       sender: "user",
@@ -178,7 +187,13 @@ export class ChatPage implements OnInit {
     });
   }
 
-  showAllMessages() {
-    this.messages = this.allMessages;
+  toggleShowAllMessages() {
+    if (this.showingAllMessages) {
+      this.messages = this.allMessages.slice(this.allMessages.length - 2);
+      this.showingAllMessages = false;
+    } else {
+      this.messages = this.allMessages;
+      this.showingAllMessages = true;
+    }
   }
 }

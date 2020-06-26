@@ -121,3 +121,31 @@
 ion-content {
   --ion-background-color: #eeeeee;
 }
+
+.custom-input {
+  color: darkcyan;
+  border-color: darkcyan;
+  background-color: transparent;
+  padding: 15px;
+  font-size: 20px;
+  margin: 20px;
+  border-radius: 30px;
+  border-style: solid;
+  border-width: 3px;
+  width: calc(100vw - 100px);
+}
+
+.show-all-button {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  z-index: 20;
+  color: #333333;
+  border-color: #333333;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  display: inline;
+  padding: 8px;
+  opacity: 0.8;
+}
