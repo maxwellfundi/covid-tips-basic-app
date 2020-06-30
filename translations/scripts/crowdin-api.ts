@@ -1,7 +1,7 @@
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import { config } from 'dotenv';
-import * as logUpdate from 'log-update';
+import * as fs from "fs-extra";
+import * as path from "path";
+import { config } from "dotenv";
+import * as logUpdate from "log-update";
 const {
   CROWDIN_TOKEN,
   CROWDIN_WORKSPACE_NAME,
@@ -17,9 +17,9 @@ import crowdin, {
   ResponseObject,
   SourceStringsModel,
   TranslationsModel,
-} from '@crowdin/crowdin-api-client';
+} from "@crowdin/crowdin-api-client";
 if (!(CROWDIN_TOKEN && CROWDIN_WORKSPACE_NAME && CROWDIN_PROJECT_ID)) {
-  throw new Error('Crowdin config not provided in .env');
+  throw new Error("Crowdin config not provided in .env");
 }
 const credentials: Credentials = {
   token: CROWDIN_TOKEN,
@@ -50,7 +50,7 @@ export async function getProjectMeta() {
 }
 
 export async function getProjectDownloadUrl() {
-  console.log('downloading');
+  console.log("downloading");
   const { targetLanguageIds } = await getProjectMeta();
   const build = (
     await translationsApi.buildProject(PROJECT_ID, {
@@ -67,18 +67,14 @@ export async function getProjectDownloadUrl() {
  * to crowdin. Note, these strings will be appended to a custom csv file within crowdin.
  *
  * @param lang - language code, must match supported project language code
- * @param filesDir - path to directory containing json files in dictionary format
- * @param parentCSV - name of file to hold list of strings on crowdin. MUST ALREADY EXIST on server
+ * @param jsonFilepath - path to json file in dictionary format
+ * @param parentCSV - name of file to hold list of strings on crowdin. Will create if does not already exist
  */
 export async function uploadJSONTranslationStrings(
   languageId: string,
-  filesDir: string,
-  parentCSV = 'all-strings.csv'
+  jsonFilepath: string,
+  parentCSV = "all-strings.csv"
 ) {
-  console.log('uploading strings');
-  const filesToUpload = fs
-    .readdirSync(filesDir)
-    .filter((f) => f.includes('.json'));
   const projectStrings = await listAllProjectSourceStrings();
   // save list of strings in hashmap for more efficient lookup (as the lists could get quite long)
   // note - rest api doesn't return correct identifiers, so recreate from text
@@ -91,31 +87,30 @@ export async function uploadJSONTranslationStrings(
   if (!projectFile) {
     projectFile = await uploadJSONTranslationPlaceholderCSV(parentCSV);
   }
-  for (const filename of filesToUpload) {
-    const strings = fs.readJSONSync(`${filesDir}/${filename}`);
-    const total = Object.keys(strings).length;
-    const log = { count: 0, total };
-    for (let [source, translation] of Object.entries<string>(strings)) {
-      // remove whitespace from start and end of strings as this can be problematic later
-      // (crowdin server sometimes removes, other times doesn't...)
-      source = source.trim();
-      translation = translation.trim();
-      const identifier = _generateIDFromText(source);
-      let projectString = projectStringsHash[identifier];
-      if (!projectString) {
-        const context = filename;
-        const text = source;
-        const fileId = projectFile.data.id;
-        projectString = await addString({ context, text, identifier, fileId });
-      }
-      await stringTranslationsApi.addTranslation(PROJECT_ID, {
-        languageId,
-        stringId: projectString.data.id,
-        text: translation,
-      });
-      log.count++;
-      logUpdate(`[${log.count}/${log.total}] ${filename}`);
+  const strings = fs.readJSONSync(jsonFilepath);
+  const filename = path.basename(jsonFilepath);
+  const total = Object.keys(strings).length;
+  const log = { count: 0, total };
+  for (let [source, translation] of Object.entries<string>(strings)) {
+    // remove whitespace from start and end of strings as this can be problematic later
+    // (crowdin server sometimes removes, other times doesn't...)
+    source = source.trim();
+    translation = translation.trim();
+    const identifier = _generateIDFromText(source);
+    let projectString = projectStringsHash[identifier];
+    if (!projectString) {
+      const context = filename;
+      const text = source;
+      const fileId = projectFile.data.id;
+      projectString = await addString({ context, text, identifier, fileId });
     }
+    await stringTranslationsApi.addTranslation(PROJECT_ID, {
+      languageId,
+      stringId: projectString.data.id,
+      text: translation,
+    });
+    log.count++;
+    logUpdate(`[${log.count}/${log.total}] ${filename}`);
   }
 }
 /**
@@ -123,12 +118,12 @@ export async function uploadJSONTranslationStrings(
  * will hold a list of strings
  */
 async function uploadJSONTranslationPlaceholderCSV(csvName: string) {
-  console.log('creating placeholder csv file');
+  console.log("creating placeholder csv file");
   const template = fs.readFileSync(
     `${process.cwd()}/translations/crowdin-template.csv`
   );
   const storageFile: any = await uploadStorageApi.addStorage(csvName, template);
-  const importOptions: SourceFilesModel.CreateFileRequest['importOptions'] = {
+  const importOptions: SourceFilesModel.CreateFileRequest["importOptions"] = {
     firstLineContainsHeader: true,
     importTranslations: false,
     scheme: {
@@ -171,7 +166,7 @@ async function uploadFileToStorage(filepath: string, storageFilename?: string) {
  */
 async function linkFileToProject(
   storageFile: UploadStorageModel.Storage,
-  importOptions: SourceFilesModel.CreateFileRequest['importOptions'],
+  importOptions: SourceFilesModel.CreateFileRequest["importOptions"],
   projectFilename?: string,
   projectDirectoryId?: number
 ) {
@@ -196,7 +191,7 @@ async function linkFileToProject(
       }
     );
   } else {
-    console.log('creating file', projectFilename);
+    console.log("creating file", projectFilename);
     projectFile = await sourceFilesApi.createFile(PROJECT_ID, {
       name: projectFilename,
       storageId: storageFile.id,
@@ -224,7 +219,7 @@ export async function uploadCSVTranslationFiles(
   }
   const filesToUpload = fs
     .readdirSync(filesDir)
-    .filter((f) => f.includes('.csv'));
+    .filter((f) => f.includes(".csv"));
 
   for (const filename of filesToUpload) {
     const storageFilename = `${lang}_${filename}`;
@@ -250,13 +245,16 @@ export async function uploadCSVTranslationFiles(
  * Current workaround is to call rest api endpoints directly via their integrated http
  * client (axios), and offer some helper methods to run batched requests
  ***************************************************************************************/
+/**
+ * Get list of all source strings for a project
+ */
 async function listAllProjectSourceStrings() {
   return _crowdinBatchGet<SourceStringsModel.String>(
     `projects/${PROJECT_ID}/strings`
   );
 }
 async function listAllStorageFiles() {
-  return _crowdinBatchGet<UploadStorageModel.Storage>('storages');
+  return _crowdinBatchGet<UploadStorageModel.Storage>("storages");
 }
 async function listAllProjectFiles() {
   return _crowdinBatchGet<SourceFilesModel.File>(
@@ -316,13 +314,13 @@ function _generateIDFromText(text: string) {
   return text
     .trim()
     .toLowerCase()
-    .replace(/[^A-Z0-9]/gi, '_');
+    .replace(/[^A-Z0-9]/gi, "_");
 }
 
 async function _waitForBuildComplete(build: TranslationsModel.Build) {
   const status = await translationsApi.checkBuildStatus(PROJECT_ID, build.id);
   const { progress } = status.data;
-  console.log('progress', progress);
+  console.log("progress", progress);
   if (progress === 100) {
     return status;
   } else {

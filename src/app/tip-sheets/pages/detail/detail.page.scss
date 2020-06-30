@@ -1,0 +1,36 @@
+section:nth-of-type(4n) {
+  background: #fbad18;
+  color: #0b4060;
+}
+
+section:nth-of-type(4n + 1) {
+  background: #5652a3;
+  color: white;
+}
+
+section:nth-of-type(4n + 2) {
+  background: #56c5d0;
+  color: #0b4060;
+}
+
+section:nth-of-type(4n + 3) {
+  background: #ed1651;
+  color: white;
+}
+
+img {
+  width: 100%;
+  max-width: 400px;
+}
+.nav-icon {
+  font-size: 2em;
+  margin-left: 5px;
+}
+#tip-sheet-5-list > li {
+  margin-bottom: 1em;
+}
+
+ion-back-button.tip-sheet-nav,
+ion-button.tip-sheet-nav {
+  color: rgba(255, 255, 255, 0.3);
+}

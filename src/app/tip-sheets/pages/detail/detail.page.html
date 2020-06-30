@@ -1,0 +1,59 @@
+<ion-content class="no-padding" *ngIf="tipSheet">
+  <div style="display: flex; align-items: center;">
+    <ion-back-button
+      defaultHref="tip-sheets"
+      class="tip-sheet-nav"
+    ></ion-back-button>
+
+    <app-tip-sheet-title
+      [number]="tipSheet.number"
+      style="flex: 1;"
+    ></app-tip-sheet-title>
+    <ion-button
+      fill="clear"
+      class="tip-sheet-nav"
+      (click)="nextTipSheet()"
+      *ngIf="tipSheet.number<totalTipSheets"
+    >
+      <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+  <app-tip-sheet-1 *ngIf="tipSheet.number===1"></app-tip-sheet-1>
+  <app-tip-sheet-2 *ngIf="tipSheet.number===2"></app-tip-sheet-2>
+  <app-tip-sheet-3 *ngIf="tipSheet.number===3"></app-tip-sheet-3>
+  <app-tip-sheet-4 *ngIf="tipSheet.number===4"></app-tip-sheet-4>
+  <app-tip-sheet-5 *ngIf="tipSheet.number===5"></app-tip-sheet-5>
+  <app-tip-sheet-6 *ngIf="tipSheet.number===6"></app-tip-sheet-6>
+  <app-tip-sheet-7 *ngIf="tipSheet.number===7"></app-tip-sheet-7>
+  <app-tip-sheet-8 *ngIf="tipSheet.number===8"></app-tip-sheet-8>
+  <app-tip-sheet-9 *ngIf="tipSheet.number===9"></app-tip-sheet-9>
+  <app-tip-sheet-10 *ngIf="tipSheet.number===10"></app-tip-sheet-10>
+  <app-tip-sheet-11 *ngIf="tipSheet.number===11"></app-tip-sheet-11>
+  <app-tip-sheet-12 *ngIf="tipSheet.number===12"></app-tip-sheet-12>
+  <app-tip-sheet-13 *ngIf="tipSheet.number===13"></app-tip-sheet-13>
+  <app-tip-sheet-14 *ngIf="tipSheet.number===14"></app-tip-sheet-14>
+  <app-tip-sheet-15 *ngIf="tipSheet.number===15"></app-tip-sheet-15>
+  <div *ngIf="tipSheet.number !== totalTipSheets" (click)="nextTipSheet()">
+    <h2 translate>Next:</h2>
+    <div style="display: flex; align-items: center;">
+      <div style="margin-left: 10px; flex: 1;">
+        <app-tip-sheet-title [number]="tipSheet.number+1"></app-tip-sheet-title>
+      </div>
+      <ion-icon
+        style="font-size: 30px;"
+        name="chevron-forward-outline"
+      ></ion-icon>
+    </div>
+  </div>
+  <ion-button
+    fill="clear"
+    style="color: white;"
+    (click)="goBack()"
+    *ngIf="tipSheet.number === totalTipSheets"
+  >
+    <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+    Home
+  </ion-button>
+</ion-content>
+<!-- TODO - provide proof of affiliation for play store and uncomment -->
+<!-- <app-info-sites-disclaimer></app-info-sites-disclaimer> -->

@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  translationsDebug: false,
   firebase: {
     apiKey: "AIzaSyDaQHCqPPPHWAPsjOR4XUPR4WDG91ER4SQ",
     authDomain: "covid-tips-basic-app.firebaseapp.com",

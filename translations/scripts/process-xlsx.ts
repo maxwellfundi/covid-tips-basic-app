@@ -1,38 +1,52 @@
-import * as fs from 'fs-extra';
-import * as XLSX from 'xlsx';
-import * as path from 'path';
-import * as crowdin from './crowdin-api';
-import { WorkSheet } from 'xlsx/types';
+import * as fs from "fs-extra";
+import * as XLSX from "xlsx";
+import * as path from "path";
+import * as crowdin from "./crowdin-api";
+import { WorkSheet } from "xlsx/types";
 
-const INPUT_DIR = path.join(process.cwd(), 'translations/input-files');
-const OUTPUT_DIR = path.join(process.cwd(), 'translations/output-files');
+const INPUT_DIR = path.join(process.cwd(), "translations/input-files");
+const OUTPUT_DIR = path.join(process.cwd(), "translations/output-files");
 
 /***************************************************************************
  * Constants used for quality control
  ***************************************************************************/
 const TARGET_SHEETS = [
-  'SocialMedia',
-  'Tipsheet1',
-  'Tipsheet2',
-  'Tipsheet3',
-  'Tipsheet4',
-  'Tipsheet5',
-  'Tipsheet6'
+  "SocialMedia",
+  "Tipsheet1",
+  "Tipsheet2",
+  "Tipsheet3",
+  "Tipsheet4",
+  "Tipsheet5",
+  "Tipsheet6",
 ];
 
 /***************************************************************************
  * Main Methods
+ * This is a custom implementation to extract translation strings from
+ * excel files formatted in a highly specific way for the project, including
+ * quality control scripts and upload to crowdin
  ***************************************************************************/
 async function main() {
   cleanOutputFolder();
   const inputFiles = listXLSXFiles(INPUT_DIR);
   for (const filename of inputFiles) {
     const xlsxFilepath = `${INPUT_DIR}/${filename}`;
-    const lang = path.basename(xlsxFilepath, '.xlsx');
+    const lang = path.basename(xlsxFilepath, ".xlsx");
     await runQualityCheck(lang, xlsxFilepath);
     /* Method 1 - upload strings directly */
     createTranslationJSON(lang, xlsxFilepath);
-    await crowdin.uploadJSONTranslationStrings(lang, `${OUTPUT_DIR}/${lang}`);
+    const translationFiles = fs
+      .readdirSync(`${OUTPUT_DIR}/${lang}`)
+      .filter((f) => path.extname(f) === ".json");
+    for (let file of translationFiles) {
+      console.log("uploading translation file", file, lang);
+      await crowdin.uploadJSONTranslationStrings(
+        lang,
+        `${OUTPUT_DIR}/${lang}/${file}`,
+        file.replace(".json", ".csv")
+      );
+    }
+
     /* Method 2 - upload csv files for conversion */
     // createTranslationCSVs(lang, xlsxFilepath);
     // await crowdin.uploadCSVTranslationFiles(lang, `${OUTPUT_DIR}/${lang}`);
@@ -64,8 +78,8 @@ async function runQualityCheck(lang: string, xlsxFilepath: string) {
     }
     const ws: WorkSheet = xlsxData.Sheets[sheetName];
     // TEST - Cell A1 contains 'English' as start of english translation column
-    const A2Val = ws['A2'].v;
-    if (A2Val !== 'English') {
+    const A2Val = ws["A2"].v;
+    if (A2Val !== "English") {
       logError(
         `Cell [A2] should contain [English] column header`,
         xlsxFilepath,
@@ -73,8 +87,8 @@ async function runQualityCheck(lang: string, xlsxFilepath: string) {
       );
     }
     // TEST - Cell B1 contains 'Translation' as start of translation column
-    const B2Val = ws['B2'].v;
-    if (!B2Val.includes('Translation')) {
+    const B2Val = ws["B2"].v;
+    if (!B2Val.includes("Translation")) {
       logError(
         `Cell [B2] should contain [Translation-] column header`,
         xlsxFilepath,
@@ -114,16 +128,19 @@ function createTranslationJSON(lang: string, xlsxFilepath: string) {
     // convert into dictionary format {"hello":"hola","goodbye":"adios"}
     const dictionary: { [englishKey: string]: string } = {};
     for (var i = 2; i < 1000; i++) {
-      const keyCell = ws['A' + i];
-      const valueCell = ws['B' + i];
-      try {
-        console.log("key: ", keyCell.v, "value: ", valueCell.v);
-      } catch (ex) {
-        console.log("error ", ex);
-      }
-      if (keyCell && keyCell.v && keyCell.v.trim && keyCell.v.trim().length > 0 
-        && valueCell && valueCell.v && keyCell.v.trim && keyCell.v.trim().length > 0) {
-          dictionary[keyCell.v] = valueCell.v;
+      const keyCell = ws["A" + i];
+      const valueCell = ws["B" + i];
+      if (
+        keyCell &&
+        keyCell.v &&
+        keyCell.v.trim &&
+        keyCell.v.trim().length > 0 &&
+        valueCell &&
+        valueCell.v &&
+        keyCell.v.trim &&
+        keyCell.v.trim().length > 0
+      ) {
+        dictionary[keyCell.v] = valueCell.v;
       } else {
         break;
       }
@@ -143,7 +160,7 @@ function createTranslationCSVs(lang: string, xlsxFilepath: string) {
     const ws = xlsxData.Sheets[sheetName];
     const csvData = XLSX.utils.sheet_to_csv(ws);
     fs.writeFileSync(`${OUTPUT_DIR}/${lang}/${sheetName}.csv`, csvData, {
-      encoding: 'utf-8',
+      encoding: "utf-8",
     });
   }
 }
@@ -153,7 +170,7 @@ function createTranslationCSVs(lang: string, xlsxFilepath: string) {
  ***************************************************************************/
 function cleanOutputFolder() {
   fs.emptyDirSync(OUTPUT_DIR);
-  fs.writeFile(`${OUTPUT_DIR}/.gitkeep`, '');
+  fs.writeFile(`${OUTPUT_DIR}/.gitkeep`, "");
 }
 
 /**
@@ -165,14 +182,14 @@ function listXLSXFiles(directoryPath: string) {
     .readdirSync(directoryPath)
     .filter(
       (filename) =>
-        path.extname(filename) === '.xlsx' && !filename.includes('~$')
+        path.extname(filename) === ".xlsx" && !filename.includes("~$")
     );
 }
 
 function logError(
   message: string,
   xlsxFilepath: string,
-  sheetname: string = ''
+  sheetname: string = ""
 ) {
   const filename = path.basename(xlsxFilepath);
   console.error(`

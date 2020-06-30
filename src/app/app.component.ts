@@ -16,7 +16,6 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private translate: TranslateService,
     private notifications: NotificationService
   ) {
     this.initializeApp();
@@ -24,7 +23,6 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.translate.use("en");
       if (this.platform.is("cordova")) {
         this.statusBar.styleDefault();
         this.splashScreen.hide();

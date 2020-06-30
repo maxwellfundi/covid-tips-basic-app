@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
+import { AppTranslateService } from "../modules/translation.module";
 
 @Component({
   selector: "app-language-select",
@@ -21,16 +21,15 @@ import { TranslateService } from "@ngx-translate/core";
 export class LanguageSelectComponent {
   currentLanguage: ILanguage;
   languages = LANGUAGES;
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: AppTranslateService) {}
 
   languageUpdated() {
     this.translate.use(this.currentLanguage.code);
   }
 
   ngOnInit() {
-    this.currentLanguage = LANGUAGES.find(
-      (l) => l.code === this.translate.currentLang
-    );
+    const lang = this.translate.currentLang || this.translate.defaultLang;
+    this.currentLanguage = LANGUAGES.find((l) => l.code === lang);
   }
 }
 interface ILanguage {
@@ -46,5 +45,9 @@ const LANGUAGES: ILanguage[] = [
   {
     code: "sw",
     name: "Kiswahili",
+  },
+  {
+    code: "af",
+    name: "Afrikaans",
   },
 ];

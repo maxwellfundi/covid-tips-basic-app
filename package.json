@@ -15,8 +15,7 @@
     "lint": "eslint --ext .ts,.js src/",
     "e2e": "ng e2e",
     "i18n:extract": "ts-node --project tsconfig.scripts.json translations/scripts/extract",
-    "i18n:upload": "ts-node --project tsconfig.scripts.json translations/scripts/upload",
-    "i18n:download": "ts-node --project tsconfig.scripts.json translations/scripts/download"
+    "i18n:process-xlsx": "ts-node --project tsconfig.scripts.json translations/scripts/process-xlsx"
   },
   "private": true,
   "husky": {
@@ -25,7 +24,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,css,scss,md}": "prettier --write"
+    "*.{js,ts,css,scss,md,json}": "prettier --write"
   },
   "dependencies": {
     "@angular-eslint/builder": "0.0.1-alpha.32",
@@ -36,6 +35,7 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
     "@crowdin/crowdin-api-client": "^1.8.4",
     "@ionic-native/core": "^5.0.7",
     "@ionic-native/device": "^5.26.0",
@@ -52,17 +52,17 @@
     "cordova-plugin-fcm-with-dependecy-updated": "^6.4.3",
     "cordova-plugin-file": "^6.0.2",
     "core-js": "^2.5.4",
+    "firebase": ">= 5.5.7 <8",
     "i": "^0.3.6",
     "lottie-web": "^5.6.10",
     "ngx-lottie": "^6.1.0",
-    "firebase": ">= 5.5.7 <8",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.24",
     "@angular-devkit/architect": "<0.900 || ^0.900.0-0 || ^9.0.0-0",
+    "@angular-devkit/build-angular": "^0.803.24",
     "@angular/cli": "~8.3.23",
     "@angular/compiler": "~8.2.14",
     "@angular/compiler-cli": "~8.2.14",

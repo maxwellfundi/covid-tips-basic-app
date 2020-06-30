@@ -1,3 +1,12 @@
+<!-- DEPRECATED 2020-06-23
+
+    Tips used to be shown in a slider, however this was removed once it was determined tip sheets needed to 
+    use their own custom translation loader per sheet, and therefore could not have all tipsheets simulataneously
+    rendered within slides
+
+    Keeping for short term in case decide to revert decision. Suggest can delete after 1 month
+-->
+
 <div class="slides-container">
   <ion-slides
     #slides
@@ -11,7 +20,7 @@
             <ion-buttons slot="start">
               <ion-back-button defaultHref="home"></ion-back-button>
             </ion-buttons>
-            <ion-title>Tips</ion-title>
+            <ion-title translate>Tips</ion-title>
           </ion-toolbar>
         </ion-header>
         <!-- <ion-content> -->
@@ -20,7 +29,7 @@
             class="tip-sheet-nav-link"
             *ngFor="let tipSheet of tipSheets; let i=index"
             (click)="slideTo(i+1)"
-            [tipSheet]="tipSheet"
+            [title]="tipSheet"
           >
           </app-tip-sheet-title>
         </div>
@@ -34,43 +43,45 @@
             <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
           </ion-button>
           <app-tip-sheet-title
-            [tipSheet]="tipSheet"
+            [title]="tipSheet"
+            [number]="i+1"
             style="flex: 1;"
           ></app-tip-sheet-title>
           <ion-button
             fill="clear"
             class="tip-sheet-nav"
-            (click)="slideTo(tipSheet.number+1)"
-            *ngIf="tipSheet.number<tipSheets.length"
+            (click)="slideTo(i+1)"
+            *ngIf="i<tipSheets.length"
           >
             <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
           </ion-button>
         </div>
-        <app-tip-sheet-1 *ngIf="tipSheet.number===1"></app-tip-sheet-1>
-        <app-tip-sheet-2 *ngIf="tipSheet.number===2"></app-tip-sheet-2>
-        <app-tip-sheet-3 *ngIf="tipSheet.number===3"></app-tip-sheet-3>
-        <app-tip-sheet-4 *ngIf="tipSheet.number===4"></app-tip-sheet-4>
-        <app-tip-sheet-5 *ngIf="tipSheet.number===5"></app-tip-sheet-5>
-        <app-tip-sheet-6 *ngIf="tipSheet.number===6"></app-tip-sheet-6>
-        <app-tip-sheet-7 *ngIf="tipSheet.number===7"></app-tip-sheet-7>
-        <app-tip-sheet-8 *ngIf="tipSheet.number===8"></app-tip-sheet-8>
-        <app-tip-sheet-9 *ngIf="tipSheet.number===9"></app-tip-sheet-9>
-        <app-tip-sheet-10 *ngIf="tipSheet.number===10"></app-tip-sheet-10>
-        <app-tip-sheet-11 *ngIf="tipSheet.number===11"></app-tip-sheet-11>
-        <app-tip-sheet-12 *ngIf="tipSheet.number===12"></app-tip-sheet-12>
-        <app-tip-sheet-13 *ngIf="tipSheet.number===13"></app-tip-sheet-13>
-        <app-tip-sheet-14 *ngIf="tipSheet.number===14"></app-tip-sheet-14>
-        <app-tip-sheet-15 *ngIf="tipSheet.number===15"></app-tip-sheet-15>
+        <app-tip-sheet-1 *ngIf="i===0"></app-tip-sheet-1>
+        <app-tip-sheet-2 *ngIf="i===1"></app-tip-sheet-2>
+        <app-tip-sheet-3 *ngIf="i===2"></app-tip-sheet-3>
+        <app-tip-sheet-4 *ngIf="i===3"></app-tip-sheet-4>
+        <app-tip-sheet-5 *ngIf="i===4"></app-tip-sheet-5>
+        <app-tip-sheet-6 *ngIf="i===5"></app-tip-sheet-6>
+        <app-tip-sheet-7 *ngIf="i===6"></app-tip-sheet-7>
+        <app-tip-sheet-8 *ngIf="i===7"></app-tip-sheet-8>
+        <app-tip-sheet-9 *ngIf="i===8"></app-tip-sheet-9>
+        <app-tip-sheet-10 *ngIf="i===9"></app-tip-sheet-10>
+        <app-tip-sheet-11 *ngIf="i===10"></app-tip-sheet-11>
+        <app-tip-sheet-12 *ngIf="i===11"></app-tip-sheet-12>
+        <app-tip-sheet-13 *ngIf="i===12"></app-tip-sheet-13>
+        <app-tip-sheet-14 *ngIf="i===13"></app-tip-sheet-14>
+        <app-tip-sheet-15 *ngIf="i===14"></app-tip-sheet-15>
         <div
           style="margin-top: 1em;"
           *ngIf="i < tipSheets.length - 1"
-          (click)="slideTo(tipSheet.number+1)"
+          (click)="slideTo(i+1)"
         >
-          <h2>Next:</h2>
+          <h2 translate>Next:</h2>
           <div style="display: flex; align-items: center;">
             <div style="margin-left: 10px; flex: 1;">
               <app-tip-sheet-title
-                [tipSheet]="tipSheets[i+1]"
+                [title]="tipSheet"
+                [number]="i+1"
               ></app-tip-sheet-title>
             </div>
             <ion-icon

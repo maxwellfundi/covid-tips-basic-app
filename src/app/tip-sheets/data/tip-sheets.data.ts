@@ -1,30 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { IonSlides } from "@ionic/angular";
-
-@Component({
-  selector: "app-tip-sheets",
-  templateUrl: "./tip-sheets.page.html",
-  styleUrls: ["./tip-sheets.scss"],
-})
-export class TipSheetsPage implements OnInit {
-  tipSheets = TIP_SHEETS;
-  // note - options passed to swiper api: https://swiperjs.com/api/
-  slideOptions: IonSlides["options"] = {
-    autoHeight: true,
-  };
-  @ViewChild("slides", { static: true }) slides: IonSlides;
-
-  constructor() {}
-  ngOnInit() {}
-
-  slideTo(index: number) {
-    this.slides.slideTo(index);
-  }
-
-  slideDidChange() {}
-}
-
-const TIP_SHEETS = [
+export const TIP_SHEETS = [
   {
     title: "One-on-One Time",
     number: 1,

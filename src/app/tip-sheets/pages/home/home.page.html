@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>Tips</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="no-padding tip-sheets-list-container">
+  <div
+    style="display: flex; align-items: center;"
+    *ngFor="let tipSheet of tipSheets"
+  >
+    <app-tip-sheet-title
+      [number]="tipSheet.number"
+      style="flex: 1;"
+      class="tip-sheet-nav-link"
+      [routerLink]="[tipSheet.number]"
+    ></app-tip-sheet-title>
+  </div>
+</ion-content>

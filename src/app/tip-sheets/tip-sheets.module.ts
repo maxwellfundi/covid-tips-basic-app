@@ -22,10 +22,11 @@ import {
   TipSheet14Component,
   TipSheet15Component,
 } from "./content";
-import { TipSheetsPage } from "./tip-sheets.page";
 
 import { TipSheetTitleComponent } from "./components/tip-sheet-title";
-import { TipSheetHeaderComponent } from "./components/tip-sheet-header";
+import { AppTranslationModule } from "../modules/translation.module";
+import { TipSheetsHomePage } from "./pages/home/home.page";
+import { TipSheetDetailPage } from "./pages/detail/detail.page";
 
 const TIP_SHEET_CONTENT_COMPONENTS = [
   TipSheet1Component,
@@ -43,9 +44,9 @@ const TIP_SHEET_CONTENT_COMPONENTS = [
   TipSheet13Component,
   TipSheet14Component,
   TipSheet15Component,
-  TipSheetHeaderComponent,
-  TipSheetsPage,
   TipSheetTitleComponent,
+  TipSheetsHomePage,
+  TipSheetDetailPage,
 ];
 
 @NgModule({
@@ -55,9 +56,9 @@ const TIP_SHEET_CONTENT_COMPONENTS = [
     IonicModule,
     TipSheetsPageRoutingModule,
     ComponentsModule,
-    TranslateModule.forChild(),
+    AppTranslationModule,
   ],
   declarations: TIP_SHEET_CONTENT_COMPONENTS,
-  exports: [TipSheetHeaderComponent, TipSheetTitleComponent],
+  exports: [TipSheetTitleComponent, TipSheetsHomePage, TipSheetDetailPage],
 })
 export class TipSheetsPageModule {}
