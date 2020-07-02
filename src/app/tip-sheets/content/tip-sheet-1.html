@@ -22,16 +22,12 @@
         the same time eachday so children or teenagers can look forward to it.
       </p>
     </div>
-    <button
-      translate
-      [routerLink]="['/activities']"
-      style="
+    <button translate [routerLink]="['/activities']" style="
         border-radius: 20px;
         background-color: white;
         font-size: 2em;
         padding: 10px;
-      "
-    >
+      ">
       Try an activity!
     </button>
   </section>
@@ -75,6 +71,7 @@
       about this. (see next screen)
     </p>
   </section>
+
   <section class="section">
     <h2 translate>Switch off the TV and phone. This is virus-free time</h2>
     <h2 translate>Ideas with your young child</h2>
@@ -85,5 +82,29 @@
       <li translate>Do a chore together - make cleaning and cooking a game!</li>
       <li translate>Help with school work</li>
     </ul>
+
+  </section>
+
+  <section class="section">
+    <div>
+      <h3 translate>For more information click below links:</h3>
+      <button class="footer-button">
+        <a translate
+          href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/healthy-parenting"
+          class="footer-button-links">TIPS FROM WHO</a>
+      </button>
+      <button class="footer-button">
+        <a translate href="https://www.unicef.org/coronavirus/covid-19-parenting-tips" class="footer-button-links">TIPS
+          FROM
+          UNICEF</a>
+      </button>
+      <button class="footer-button">
+        <a translate href="https://www.covid19parenting.com/" class="footer-button-links">WORLD WIDE LANGUAGE</a>
+      </button>
+      <button class="footer-button">
+        <a translate href="https://www.acceleratehub.org/plh-research-outputs/"
+          class="footer-button-links">EVIDENCE-BASE</a>
+      </button>
+    </div>
   </section>
 </div>
