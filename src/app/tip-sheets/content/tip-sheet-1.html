@@ -11,44 +11,42 @@
     </p>
   </div>
   <section class="section">
-    <h2 translate>Set aside time to spend with each child</h2>
-    <div style="display: flex;">
-      <div class="blob-container">
-        <img src="assets/img/body1.svg" class="body" />
-        <img src="assets/img/arm1.svg" class="arm" />
-      </div>
-      <p translate style="width: calc(100% - 140px);">
-        It can be for just 20 minutes, or longer - it's up to us. It can be at
-        the same time eachday so children or teenagers can look forward to it.
+    <div style="display: flex; flex-direction: row">
+      <p translate style="font-size: 20px;">
+        Set aside time to spend with each child.
       </p>
+      <img class="blobs-playing-with-blocks" src="assets/images/blobs_playing_with_blocks.svg">
     </div>
-    <button translate [routerLink]="['/activities']" style="
-        border-radius: 20px;
-        background-color: white;
-        font-size: 2em;
-        padding: 10px;
-      ">
+    <span translate>It can be for just 20 minutes, or longer - it's up to us. It can be at
+      the same time each day so children or teenagers can look forward to it.</span>
+    <button translate [routerLink]="['/activities']" class="try-activity-btn">
       Try an activity!
     </button>
   </section>
   <section class="section">
-    <h2 translate>Ideas with your baby/toddler</h2>
-    <div style="display: flex;">
-      <div class="blob-container">
-        <img src="assets/img/body2.svg" class="body" />
-        <img src="assets/img/body2.svg" class="todler" />
-      </div>
+    <div class="section-header" (click)="teenSectionExpanded = !teenSectionExpanded">
+      <h2 translate>Ideas with your baby/toddler</h2>
+      <ion-icon name="{{ teenSectionExpanded ? 'chevron-up-outline' : 'chevron-down-outline' }}"></ion-icon>
+    </div>
+    <div *ngIf="teenSectionExpanded">
       <ul>
         <li translate>Copy their facial expression and sounds</li>
         <li translate>Sing songs, make music with pots and spoons</li>
         <li translate>Stack cups or blocks</li>
         <li translate>Tell a story, read a book, or share pictures</li>
       </ul>
+      <div class="story-container">
+        <p class="top-text">We are making a delicious meal together!</p>
+        <img src="assets/images/stories/making-a-meal-baby1/0.svg">
+      </div>
     </div>
   </section>
   <section class="section">
-    <h2 translate>Ideas with your teenager</h2>
-    <div style="display: flex;">
+    <div class="section-header" (click)="section2Expanded = !section2Expanded">
+      <h2 translate>Ideas with your teenager</h2>
+      <ion-icon name="{{ section2Expanded ? 'chevron-up-outline' : 'chevron-down-outline' }}"></ion-icon>
+    </div>
+    <div *ngIf="section2Expanded" style="display: flex;">
       <ul>
         <li translate>
           Talk about something they like: sports, music, celebrities, friends
@@ -57,6 +55,19 @@
         <li translate>Exercise together to their favorite music</li>
       </ul>
     </div>
+  </section>
+  <section class="section">
+    <div class="section-header" (click)="childSectionExpanded = !childSectionExpanded">
+      <h2 translate>Ideas with your young child</h2>
+      <ion-icon name="{{ childSectionExpanded ? 'chevron-up-outline' : 'chevron-down-outline' }}"></ion-icon>
+    </div>
+    <ul *ngIf="childSectionExpanded">
+      <li translate>Read a book or look at pictures</li>
+      <li translate>Go for a walk - outdoors or around the home</li>
+      <li translate>Dance to music or sing songs!</li>
+      <li translate>Do a chore together - make cleaning and cooking a game!</li>
+      <li translate>Help with school work</li>
+    </ul>
   </section>
   <section class="section">
     <h2 translate>
@@ -74,15 +85,6 @@
 
   <section class="section">
     <h2 translate>Switch off the TV and phone. This is virus-free time</h2>
-    <h2 translate>Ideas with your young child</h2>
-    <ul>
-      <li translate>Read a book or look at pictures</li>
-      <li translate>Go for a walk - outdoors or around the home</li>
-      <li translate>Dance to music or sing songs!</li>
-      <li translate>Do a chore together - make cleaning and cooking a game!</li>
-      <li translate>Help with school work</li>
-    </ul>
-
   </section>
 
   <section class="section">
@@ -95,8 +97,7 @@
       </button>
       <button class="footer-button">
         <a translate href="https://www.unicef.org/coronavirus/covid-19-parenting-tips" class="footer-button-links">TIPS
-          FROM
-          UNICEF</a>
+          FROM UNICEF</a>
       </button>
       <button class="footer-button">
         <a translate href="https://www.covid19parenting.com/" class="footer-button-links">WORLD WIDE LANGUAGE</a>

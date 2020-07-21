@@ -79,9 +79,11 @@ export async function uploadJSONTranslationStrings(
   // save list of strings in hashmap for more efficient lookup (as the lists could get quite long)
   // note - rest api doesn't return correct identifiers, so recreate from text
   const projectStringsHash: { [id: string]: typeof projectStrings[0] } = {};
-  projectStrings.forEach(
-    (s) => (projectStringsHash[_generateIDFromText(s.data.text as string)] = s)
-  );
+  projectStrings.forEach((s) => {
+    if (s && s.data && s.data.text) {
+      projectStringsHash[_generateIDFromText(s.data.text as string)] = s;
+    }
+  });
   const projectFiles = await listAllProjectFiles();
   let projectFile = projectFiles.find((f) => f.data.name === parentCSV);
   if (!projectFile) {
@@ -312,9 +314,11 @@ async function _crowdinBatchGet<T>(
  */
 function _generateIDFromText(text: string) {
   return text
-    .trim()
-    .toLowerCase()
-    .replace(/[^A-Z0-9]/gi, "_");
+    ? text
+    : ""
+        .trim()
+        .toLowerCase()
+        .replace(/[^A-Z0-9]/gi, "_");
 }
 
 async function _waitForBuildComplete(build: TranslationsModel.Build) {

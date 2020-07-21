@@ -2,11 +2,36 @@
   display: flex;
   align-items: center;
 
-  border-bottom: 1px solid var(--ion-color-tertiary);
-  padding: 20px 20px;
+  padding: 20px;
   cursor: pointer;
+
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.5);
+
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &.tips {
+    background-color: #ffcb05;
+  }
+
+  &.activities {
+    background-color: #56c4cf;
+  }
+
+  &.chat {
+    background-color: #ed1651;
+
+    & > h2 {
+      color: white;
+    }
+  }
 }
+
 .nav-menu-item > h2 {
+  font-size: 24px;
   margin-left: 20px;
-  color: var(--ion-color-tertiary);
+  color: var(--ion-color-primary);
 }

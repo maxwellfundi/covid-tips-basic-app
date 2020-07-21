@@ -5,7 +5,11 @@ import { Component } from "@angular/core";
   templateUrl: "./tip-sheet-1.html",
   styleUrls: ["./tip-sheets.scss"],
 })
-export class TipSheet1Component {}
+export class TipSheet1Component {
+  teenSectionExpanded = false;
+  section2Expanded = false;
+  childSectionExpanded = false;
+}
 
 @Component({
   selector: "app-tip-sheet-2",

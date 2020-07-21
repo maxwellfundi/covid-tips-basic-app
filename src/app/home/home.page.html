@@ -1,21 +1,27 @@
 <!-- TODO - provide proof of affiliation for play store and uncomment -->
 <!-- <app-partners-footer></app-partners-footer> -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+    </ion-buttons>
+    <ion-title translate>Covid-19 Parenting</ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content class="padding">
   <div style="height: 100%; display: flex; flex-direction: column;">
-    <h1 translate color="secondary">Demo-1 19 Parenting</h1>
     <div class="nav-menu" style="flex: 1;">
-      <div class="nav-menu-item" [routerLink]="['/tip-sheets']">
-        <img src="assets/img/menu-tips.svg" />
+      <div class="nav-menu-item tips" [routerLink]="['/tip-sheets']">
+        <img src="assets/images/tips_icon1.svg" />
         <h2 translate>Parenting Tips</h2>
       </div>
-      <div class="nav-menu-item" [routerLink]="['/activities']">
-        <img src="assets/img/menu-activities.svg" />
+      <div class="nav-menu-item activities" [routerLink]="['/activities']">
+        <img src="assets/images/activities_icon1.svg" />
         <h2 translate>
           Fun Activities
         </h2>
       </div>
-      <div class="nav-menu-item" [routerLink]="['/chat']">
-        <img src="assets/img/menu-chat1.svg" />
+      <div class="nav-menu-item chat" [routerLink]="['/chat']">
+        <img src="assets/images/chat_icon1.svg" />
         <h2 translate>
           Chat
         </h2>

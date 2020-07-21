@@ -6,7 +6,6 @@ import { TIP_SHEETS } from "../data/tip-sheets.data";
   template: ` <div class="tip-title-container">
     <div class="tip-list-number">{{ tipSheet.number }}</div>
     <div style="flex: 1; text-align:left">
-      <h2 class="tip-list-title" translate>DEMO-1 PARENTING</h2>
       <h2 class="tip-list-subtitle" translate>
         {{ tipSheet.title }}
       </h2>
@@ -20,8 +19,9 @@ import { TIP_SHEETS } from "../data/tip-sheets.data";
       }
       .tip-list-number {
         color: var(--ion-color-tertiary);
-        font-size: 80px;
-        margin-right: 10px;
+        font-size: 40px;
+        margin-left: 10px;
+        margin-right: 30px;
         line-height: 80px;
       }
       .tip-list-title {

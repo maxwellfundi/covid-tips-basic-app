@@ -1,16 +1,24 @@
-section:nth-of-type(4n) {
-  background: #f0d90b;
-  color: #0b4060;
+.tip-sheet {
+  font-family: robotoCondensed, sans-serif;
+}
+
+section {
+  box-shadow: 2px 3px 13px 3px rgba(0, 0, 0, 0.7);
 }
 
 section:nth-of-type(4n + 1) {
-  background: #ed1651;
-  color: white;
+  background: #f0d90b;
+  color: #0b4060;
+
+  .try-activity-btn {
+    border-color: #0b4060;
+    color: #0b4060;
+  }
 }
 
 section:nth-of-type(4n + 2) {
-  background: #ed1651;
-  color: #0b4060;
+  background: #5e62ac;
+  color: white;
 }
 
 section:nth-of-type(4n + 3) {
@@ -18,10 +26,21 @@ section:nth-of-type(4n + 3) {
   color: white;
 }
 
+section:nth-of-type(4n) {
+  background: #56c5d0;
+  color: #0b4060;
+
+  .try-activity-btn {
+    border-color: #0b4060;
+    color: #0b4060;
+  }
+}
+
 .tip-sheets-list-container {
   display: flex;
   flex-direction: column;
 }
+
 .tip-sheet-nav-link {
   border-bottom: 1px solid rgb(255, 255, 255, 0.3);
   cursor: pointer;
@@ -31,10 +50,52 @@ img {
   width: 100%;
   max-width: 400px;
 }
+
 .nav-icon {
   font-size: 2em;
   margin-left: 5px;
 }
+
 #tip-sheet-5-list > li {
   margin-bottom: 1em;
+}
+
+.try-activity-btn {
+  display: block;
+  color: white;
+  background-color: transparent;
+  border-style: solid;
+  border-width: 1px;
+  border-color: white;
+  border-radius: 20px;
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+  width: 90%;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  ion-icon {
+    margin: 20px;
+    font-size: 40px;
+  }
+}
+
+.blobs-playing-with-blocks {
+  position: relative;
+  top: -30px;
+}
+
+.story-container {
+  position: relative;
+
+  .top-text {
+    position: absolute;
+    color: #0b4060;
+    padding: 15px;
+  }
 }

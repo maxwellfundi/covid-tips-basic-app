@@ -37,6 +37,13 @@ const routes: Routes = [
       import("./stories/stories.module").then((m) => m.StoriesPageModule),
   },
   {
+    path: "take-a-pause",
+    loadChildren: () =>
+      import("./take-a-pause/take-a-pause.module").then(
+        (m) => m.TakeAPausePageModule
+      ),
+  },
+  {
     path: "chat",
     loadChildren: () =>
       import("./chat/chat.module").then((m) => m.ChatPageModule),
@@ -45,7 +52,10 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+      useHash: true,
+    }),
   ],
   exports: [RouterModule],
 })
