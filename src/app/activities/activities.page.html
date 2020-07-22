@@ -1,19 +1,28 @@
+<!-- TODO - provide proof of affiliation for play store and uncomment -->
+<!-- <app-partners-footer></app-partners-footer> -->
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Activities</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>Activities</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content>
-  <ion-list>
-    <ion-item>
-      <img src="assets/images/songs_button1.png" [routerLink]="['/songs']" alt="Songs">
-    </ion-item>
-    <ion-item>
-      <img src="assets/images/stories_button1.png" [routerLink]="['/stories']" alt="Stories">
-    </ion-item>
-    <ion-item>
-      <img src="assets/images/take_a_pause_button1.png" [routerLink]="['/take-a-pause']" alt="Take a Pause">
-    </ion-item>
-  </ion-list>
+<ion-content class="padding">
+  <div style="height: 100%; display: flex; flex-direction: column;">
+    <div class="nav-menu" style="flex: 1;">
+      <div class="nav-menu-item songs" [routerLink]="['/songs']">
+        <img src="assets/images/songs_icon1.svg" />
+        <h2 translate>Songs</h2>
+      </div>
+      <div class="nav-menu-item stories" [routerLink]="['/stories']">
+        <img src="assets/images/stories_icon1.svg" />
+        <h2 translate>Stories</h2>
+      </div>
+      <div class="nav-menu-item take-a-pause" [routerLink]="['/take-a-pause']">
+        <img src="assets/images/pause_icon1.svg" />
+        <h2 translate>Take a Pause</h2>
+      </div>
+    </div>
+  </div>
 </ion-content>

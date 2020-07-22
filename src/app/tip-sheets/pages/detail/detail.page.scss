@@ -34,3 +34,9 @@ ion-back-button.tip-sheet-nav,
 ion-button.tip-sheet-nav {
   color: rgba(255, 255, 255, 0.3);
 }
+
+@media print {
+  ion-content {
+    max-width: 500px;
+  }
+}

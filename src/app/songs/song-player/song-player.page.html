@@ -3,9 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
-    <ion-title class="title-small"
-      >🎵 Now Playing: {{currentSong.songTitle}}</ion-title
-    >
+    <ion-title class="title-small">🎵 Now Playing: {{currentSong.songTitle}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,19 +13,12 @@
         https://ionicframework.com/docs/native/native-audio
         to deal with audio isses on older versions of Android
     -->
-  <audio
-    controls
-    #audioElem
-    [src]="currentSong.audioURL"
-    autoplay="true"
-    (timeupdate)="onAudioTimeUpdate(audioElem)"
-  ></audio>
-  <!--<div class="button-container">
-      <ion-button shape="round" (click)="toggleAudio()">
-          <ion-icon name="{{paused ? 'play' : 'pause'}}"></ion-icon>
-      </ion-button>
-  </div>-->
-  <p>Time: {{currentMinutes}}:{{currentSeconds}}</p>
+  <audio #audioElem [src]="currentSong.audioURL" autoplay="true" (timeupdate)="onAudioTimeUpdate(audioElem)"></audio>
+  <div class="button-container">
+    <ion-button shape="round" (click)="toggleAudio()">
+      <ion-icon name="{{paused ? 'play' : 'pause'}}"></ion-icon>
+    </ion-button>
+  </div>
   <div *ngIf="hasInstructions" class="lyrics-list">
     <div class="line">Instructions:</div>
     <div class="line" *ngFor="let line of lyricLinesInstructions">
@@ -36,9 +27,10 @@
   </div>
   <div class="lyric-section">
     <div class="blob-container">
-      <img src="assets/images/body3.svg" class="body" />
+      <!--<img src="assets/images/body3.svg" class="body" />
       <img src="assets/images/arm1.svg" class="arm" />
-      <img src="assets/images/mouth1.svg" class="mouth" />
+      <img src="assets/images/mouth1.svg" class="mouth" />-->
+      <ng-lottie [options]="person1AnimOptions"></ng-lottie>
     </div>
     <div class="lyrics-list" [style]="'color:' + lyricPerson1Color">
       <div class="line" *ngFor="let line of lyricLinesPerson1">{{line}}</div>

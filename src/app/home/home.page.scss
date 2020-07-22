@@ -10,11 +10,11 @@
   box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.5);
 
   max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 30px;
+  margin-right: 30px;
 
   &.tips {
-    background-color: #ffcb05;
+    background-color: #fbad18;
   }
 
   &.activities {
@@ -22,11 +22,25 @@
   }
 
   &.chat {
-    background-color: #ed1651;
+    background-color: #e7406d;
+  }
 
-    & > h2 {
-      color: white;
-    }
+  &.partners {
+    background-color: #6e78b9;
+  }
+}
+
+@media only screen and (max-width: 321px) {
+  .nav-menu-item {
+    margin: 10px;
+    padding: 10px;
+  }
+}
+
+@media only screen and (min-width: 570px) {
+  .nav-menu-item {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -34,4 +48,12 @@
   font-size: 24px;
   margin-left: 20px;
   color: var(--ion-color-primary);
+}
+
+.app-title {
+  color: white;
+  font-size: 30px;
+  width: 290px;
+  margin-left: auto;
+  margin-right: auto;
 }

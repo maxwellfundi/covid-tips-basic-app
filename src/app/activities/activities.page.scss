@@ -1,0 +1,48 @@
+.nav-menu-item {
+  display: flex;
+  align-items: center;
+
+  padding: 20px;
+  cursor: pointer;
+
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.5);
+
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &.songs {
+    background-color: #fbad18;
+  }
+
+  &.stories {
+    background-color: #56c4cf;
+  }
+
+  &.take-a-pause {
+    background-color: #df3965;
+  }
+}
+
+@media only screen and (max-width: 570px) {
+  .nav-menu-item {
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+}
+
+.nav-menu-item > h2 {
+  font-size: 24px;
+  margin-left: 20px;
+  color: var(--ion-color-primary);
+}
+
+.app-title {
+  color: white;
+  font-size: 30px;
+  width: 290px;
+  margin-left: auto;
+  margin-right: auto;
+}
